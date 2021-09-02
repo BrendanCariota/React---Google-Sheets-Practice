@@ -1,18 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Container, Button, Table } from "react-bootstrap";
-import axios from "axios";
+import React from "react";
+import { Container, Table } from "react-bootstrap";
 
 const List = ({ userList }) => {
-  // const [userList, setUserList] = useState([]);
-
-  const updateUserList = async () => {
-    // const { data } = await axios.get("http://localhost:5000/user");
-    // setUserList(data.values);
-  };
-
-  // useEffect(() => {
-  //   updateUserList();
-  // }, []);
+  console.log(userList);
 
   return (
     <Container>

@@ -28,7 +28,6 @@ const InputForm = ({ setUserList, userList }) => {
     if (!data.values) {
       setUserList([]);
     } else {
-      console.log(data.values);
       setUserList(data.values);
     }
   };
@@ -45,6 +44,7 @@ const InputForm = ({ setUserList, userList }) => {
 
   useEffect(() => {
     updateUserList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [success]);
 
   return (

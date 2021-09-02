@@ -1,27 +1,25 @@
 import express from "express";
-import { google } from "googleapis";
+8;
+import authentication from "../utils.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const router = express.Router();
 
-const spreadsheetId = "1jKUf5Ru8oQX18mhjVc4g9GowjK__EghDHjrY2obi7V4";
+const spreadsheetId = process.env.SPREADSHEET_ID;
 
-const auth = new google.auth.GoogleAuth({
-  keyFile: "keys.json",
-  scopes: "https://www.googleapis.com/auth/spreadsheets",
-});
-
-// Auth client object
-const authClientObject = await auth.getClient();
-
-// Our Google Sheet
-const googleSheet = google.sheets({ version: "v4", auth: authClientObject });
-
+// @desc    Create a new user
+// @route   POST /users
+// @access  Public
 router.post("/", async (req, res) => {
+  // Destructures the sheet data after it has been authenticated
+  const { sheets } = await authentication();
+
   const { name, country, position, salary } = req.body;
 
   // Write data into the google sheet
-  await googleSheet.spreadsheets.values.append({
-    auth,
+  await sheets.spreadsheets.values.append({
     spreadsheetId,
     range: "Sheet1!A:D", // Sheet name and range of cells
     valueInputOption: "USER_ENTERED",
@@ -31,9 +29,14 @@ router.post("/", async (req, res) => {
   });
 });
 
+// @desc    Gets all users from sheet
+// @route   GET /users
+// @access  Public
 router.get("/", async (req, res) => {
-  const readData = await googleSheet.spreadsheets.values.get({
-    auth,
+  // Destructures the sheet data after it has been authenticated
+  const { sheets } = await authentication();
+
+  const readData = await sheets.spreadsheets.values.get({
     spreadsheetId,
     range: "Sheet1!A:D",
   });
