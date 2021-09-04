@@ -74,25 +74,30 @@ router.post("/delete", async (req, res) => {
   const { sheets } = await authentication();
 
   const { indexToUpdate } = req.body;
+  const indexToDelete = indexToUpdate - 1;
 
   // Write data into the google sheet
-  await sheets.spreadsheets.batchUpdate({
+  const data = await sheets.spreadsheets.batchUpdate({
     spreadsheetId,
     resource: {
       requests: [
         {
-          deleteDimension: {
+          deleteRange: {
             range: {
               sheetId: 0,
-              dimension: "ROWS",
-              startIndex: indexToUpdate,
-              endIndex: indexToUpdate,
+              startRowIndex: indexToDelete,
+              endRowIndex: indexToDelete + 1,
+              startColumnIndex: 0,
+              endColumnIndex: 5,
             },
+            shiftDimension: "ROWS",
           },
         },
       ],
     },
   });
+
+  res.send(data);
 });
 
 export default router;

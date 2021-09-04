@@ -62,9 +62,11 @@ const List = ({ userList, setUserList }) => {
   }
 
   const deleteUser = async () => {
-    axios.post("http://localhost:5000/user/delete", {
-      indexToUpdate,
-    });
+    axios
+      .post("http://localhost:5000/user/delete", {
+        indexToUpdate,
+      })
+      .then((res) => console.log(res.data.data.replies));
     handleClose();
     setSuccess(true);
   };
