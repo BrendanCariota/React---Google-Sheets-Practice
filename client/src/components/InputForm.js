@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Container, Button, FloatingLabel, Form, Toast } from "react-bootstrap";
+import { v4 as uuidv4 } from "uuid";
 
 const InputForm = ({ setUserList, userList }) => {
   const [name, setName] = useState("");
@@ -16,6 +17,7 @@ const InputForm = ({ setUserList, userList }) => {
     e.preventDefault();
     setSuccess(true);
     await axios.post("http://localhost:5000/user", {
+      id: uuidv4(),
       name,
       country,
       position,

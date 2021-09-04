@@ -21,7 +21,7 @@ function App() {
           <InputForm setUserList={setUserList} userList={userList} />
         </Col>
         <Col>
-          <List userList={userList} />
+          <List userList={userList} setUserList={setUserList} />
         </Col>
       </Row>
     </Container>
